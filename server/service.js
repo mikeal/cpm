@@ -7,10 +7,12 @@ var http = require('http')
   , fs = require('fs')
   , qs = require('querystring')
   , hashRouter = require('http-hash-router')
+  , mkdb = require('./db')
   ;
 
 function service (opts) {
   var router = hashRouter()
+    , db = mkdb(opts)
   router.set('/', function (req, res) {
     var p = path.join(__dirname, 'index.html')
     fs.createReadStream(p).pipe(response.html()).pipe(res)
@@ -18,7 +20,8 @@ function service (opts) {
   router.set('/cpm/publish', function (req, res) {
     body(req, function (err, data) {
       if (err) return response.error(err).pipe(res)
-      // TODO write data
+      console.error('PUT', data)
+
     })
   })
 
