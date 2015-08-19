@@ -26,21 +26,21 @@ function torrentStart (dir, cb) {
   })
 }
 
-function client (dir, cb) {
+function client (dir, opts, cb) {
   dir = path.resolve(dir)
   parseDockerfile(dir, function (e, pojo) {
     if (e) return cb(e)
     torrentStart(dir, function (e, torrent) {
-      publish(pojo, torrent, cb)
+      publish(pojo, torrent, opts.service, cb)
     })
   })
 }
 
-function publish (pojo, torrent, cb) {
+function publish (pojo, torrent, service, cb) {
   var pkg = {pojo:pojo, torrent:torrent}
   pkg.name = pojo.cpm_name
   pkg.version = pojo.cpm_version
-  request.put('http://jason-service/cpm/publish', {json:pkg}, function (e, resp, data) {
+  request.put(service+'/cpm/publish', {json:pkg}, function (e, resp, data) {
     // TODO
     // * Return from the service an endpoint we can get a stream of upload progress
     // * Output the remote ends download progress in the CLI
