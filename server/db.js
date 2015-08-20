@@ -1,4 +1,4 @@
-var request = require('request')
+var request = require('request').defaults({json:true})
 
 function db (url) {
   if (url[url.length-1] !== '/') url += '/'
@@ -12,9 +12,10 @@ function db (url) {
       } catch(e) {
         return cb(e)
       }
-
+      console.log(url+encodeURIComponent(id))
       request.put(url+encodeURIComponent(id), {json:doc}, function (e, resp, info) {
         if (e) return cb(e)
+        console.error('write status is', resp.statusCode)
         if (resp.statusCode === 409) {
           return updateDoc(id, func, cb)
         }
