@@ -1,5 +1,7 @@
 ## Publish Instructions
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/mikeal/cpm.svg)](https://greenkeeper.io/)
+
 Add the following variables to your Dockerfile
 
 ```
